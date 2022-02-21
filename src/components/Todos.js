@@ -1,22 +1,28 @@
-import React, { useState } from 'react'
-import TodoItem from './TodoItem'
+import React, { useContext } from "react";
+import TodoForm from "./TodoForm";
+import TodoItem from "./TodoItem";
+import { TodoContext } from "../contexts/TodoContext";
+import { AuthContext } from "../contexts/AuthContext";
 
 const Todos = () => {
-    const [todo, setTodo] = useState([
-        { id: 1, title: 'Viec 1' },
-        { id: 2, title: 'Viec 2' },
-        { id: 3, title: 'Viec 3' },
-    ])
+  const { todos } = useContext(TodoContext);
 
-    return (
-        <div className='todo-list'>
-            <ul>
-                {todo.map(todo => (
-                    <TodoItem key={todo.id} todo={todo} />
-                ))}
-            </ul>
-        </div>
-    )
-}
+  const { isAuthenticated, toggleAuth } = useContext(AuthContext);
 
-export default Todos
+  return (
+    <div className="todo-list">
+      <TodoForm />
+      {isAuthenticated ? (
+        <ul>
+          {todos.map((todo) => (
+            <TodoItem key={todo.id} todo={todo} />
+          ))}
+        </ul>
+      ) : (
+        ""
+      )}
+    </div>
+  );
+};
+
+export default Todos;

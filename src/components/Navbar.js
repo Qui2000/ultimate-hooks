@@ -1,20 +1,31 @@
-import React from 'react'
+import React, { useContext } from "react";
+import { ThemeContext } from "../contexts/ThemeContext";
+import { AuthContext } from "../contexts/AuthContext";
+// import { TOGGLE_AUTH } from '../reducers/types'
 
 const Navbar = () => {
-    const style = {
-        background: 'rgb(240, 240, 240)',
-        color: 'black' 
-    }
+  // Load theme context
+  const { theme } = useContext(ThemeContext);
+  const { isLightTheme, light, dark } = theme;
+  const style = isLightTheme ? light : dark;
 
-    return (
-        <div className='navbar' style={style}>
-            <h1>My Hooks App</h1>
-            <ul>
-                <li>Home </li>
-                <li>About</li>
-            </ul>
-        </div>
-    )
-}
+  const { isAuthenticated, toggleAuth } = useContext(AuthContext);
+  console.log(isAuthenticated);
 
-export default Navbar
+  return (
+    <div className="navbar" style={style}>
+      <h1>My Hooks App</h1>
+      <ul>
+        <li>Home</li>
+        <li>
+          {isAuthenticated ? " You are logged in " : ""}
+          <button onClick={toggleAuth}>
+            {isAuthenticated ? "Logout" : "Login"}
+          </button>
+        </li>
+      </ul>
+    </div>
+  );
+};
+
+export default Navbar;

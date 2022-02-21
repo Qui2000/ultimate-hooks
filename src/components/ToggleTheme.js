@@ -1,21 +1,18 @@
 import React, { useContext } from "react";
 import { ThemeContext } from "../contexts/ThemeContext";
-import { TodoContext } from "../contexts/TodoContext";
 
-const TodoItem = ({ todo }) => {
+const ToggleTheme = () => {
   const { theme } = useContext(ThemeContext);
-
   const { isLightTheme, dark, light } = theme;
-
-  const { deleteTodo } = useContext(TodoContext);
+  const { toggleTheme } = useContext(ThemeContext);
 
   const style = isLightTheme ? light : dark;
 
   return (
-    <li onClick={deleteTodo.bind(this, todo.id)} style={style}>
-      {todo.title}
-    </li>
+    <div className="toggle-theme" onClick={toggleTheme}>
+      <button style={style}>Toggle Theme</button>
+    </div>
   );
 };
 
-export default TodoItem;
+export default ToggleTheme;
